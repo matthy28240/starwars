@@ -94,6 +94,8 @@
                 <div><Letters onLetterSelected={this.selectLetter}/>
                 <Score letter={this.state.letter}/></div>
                 <Random />
+                <div><Letters2 onLetterSelected={this.selectLetter}/>
+                <Score2 letter={this.state.letter}/></div>
                 </div>
             );
         },
@@ -168,6 +170,50 @@
       },
     });
 
+    //select quote
+
+    var Letters2 = React.createClass({
+
+        render : function () {
+            var handler = this.props.onLetterSelected;
+
+            return (<div>
+                {letters.map(function(item) {
+                    return <Letter2 itemValue={item} whenClick={handler} />;
+                })}
+            </div>);
+        },
+
+    });
+
+    var Letter2 = React.createClass({
+
+        render : function () {
+            var classname = this.state.selected ? 'selected' : '';
+            return (<div className={classname} onClick={this.handleClick}>{this.props.itemValue.quote}</div>);
+        },
+
+        getInitialState : function () {
+            return {selected : false };
+        },
+
+        handleClick : function () {
+            random=stringGen(32);
+            //randomElement = letters[Math.floor(Math.random()*letters.length)];
+            this.props.whenClick(this.props.itemValue);
+            //this.setState({selected : true});
+        }
+    });
+
+    var Score2 = React.createClass({
+
+        render : function () {
+            return (<div>
+                {this.props.letter.quote} was said by : {this.props.letter.author}
+            </div>);
+        },
+
+    });
 
     React.render(<Tree />, document.getElementById('root'));
 
